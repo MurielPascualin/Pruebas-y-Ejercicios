@@ -61,8 +61,32 @@ public class TestClase {
 		fail("permitio inscribir un 8° alumno");
 	}
 	
+	//de aca es nuevo.
 	@Test
-	private void testEliminarAlumno(){
-		
+	public void testEliminarUltimoAlumno() throws Exception{
+		Clase curso= new Clase(Clase.CUPO.CUPO_7);
+		Alumno alu= new Alumno();
+		curso.inscribir(alu);
+		curso.desinscribir(alu);
+		assertEquals("no quedo el curso vacio", 0,curso.cantidadDeAlumnos());
 	}
+
+	@Test
+	public void testEliminarUnAlumno() throws Exception{
+		Clase curso= new Clase(Clase.CUPO.CUPO_7);
+		Alumno alu1= new Alumno();
+		Alumno alu2= new Alumno();
+		Alumno alu3= new Alumno();
+		curso.inscribir(alu1);
+		curso.inscribir(alu3);
+		curso.inscribir(alu2);
+		int cant= curso.cantidadDeAlumnos();
+		curso.desinscribir(alu3);
+		assertEquals("no eliminó nada", cant-1,curso.cantidadDeAlumnos());
+		assertFalse("no borró al que debia",curso.estaInscripto(alu3));
+		assertTrue("borró uno equivocado",curso.estaInscripto(alu2));
+		assertTrue("borró uno equivocado",curso.estaInscripto(alu1));
+	}
+	
+	
 }

@@ -34,4 +34,8 @@ public class Clase {
 		return listaAlumnos.contains(alu);
 	}
 
+	public void desinscribir(Alumno alu) {
+		listaAlumnos.remove(alu);
+	}
+
 }
