@@ -5,22 +5,35 @@ import org.junit.Test;
 
 public class TestClase {
 
-	@Test
-	public void testCupoInvalido() {
-		try{
-		Clase curso = new Clase(null);
-		}
-		catch (Exception e){
-			System.out.println("anduvo");
-			return;
-		}
-		fail("permitio crear clase de 4");
+	@Test (expected = Exception.class)
+	public void testClaseInvalida1() {
+		
+		Clase curso = new Clase(null, null);
+		
+		fail("permitio crear clase sin datos");
 	}
+	
+	@Test (expected = Exception.class)
+	public void testClaseInvalida2() {
+		
+		Clase curso = new Clase(Clase.CUPO.CUPO_14, null);
+		
+		fail("permitio crear clase sin datos");
+	}
+	
+	@Test (expected = Exception.class)
+	public void testClaseInvalida3() {
+		
+		Clase curso = new Clase(null, Clase.TIPO.TIPO_2);
+		
+		fail("permitio crear clase sin datos");
+	}
+	
 	
 	@Test
 	public void testCupoValido7(){
 		try{
-			Clase curso= new Clase(Clase.CUPO.CUPO_7);
+			Clase curso= new Clase(Clase.CUPO.CUPO_7, null);
 		}
 		catch(Exception e){
 		fail("no permite crear una clase de 7");
@@ -29,7 +42,7 @@ public class TestClase {
 	@Test
 	public void testCupoValido14(){
 		try{
-			Clase curso= new Clase(Clase.CUPO.CUPO_14);
+			Clase curso= new Clase(Clase.CUPO.CUPO_14, null);
 		}
 		catch(Exception e){
 		fail("no permite crear una clase de 14");
@@ -37,7 +50,7 @@ public class TestClase {
 	
 	@Test
 	public void testAgregarAlumno() throws Exception{
-		Clase curso= new Clase(Clase.CUPO.CUPO_7);
+		Clase curso= new Clase(Clase.CUPO.CUPO_7, null);
 		int cant= curso.cantidadDeAlumnos();
 		Alumno alu= new Alumno();
 		curso.inscribir(alu);
@@ -49,7 +62,7 @@ public class TestClase {
 	
 	@Test
 	public void testNoPermitirAgregar8() throws Exception{
-		Clase curso= new Clase(Clase.CUPO.CUPO_7);
+		Clase curso= new Clase(Clase.CUPO.CUPO_7, null);
 		for (int i = 0; i < 7; i++) {
 			curso.inscribir(new Alumno());
 		}
@@ -64,16 +77,23 @@ public class TestClase {
 	//de aca es nuevo.
 	@Test
 	public void testEliminarUltimoAlumno() throws Exception{
-		Clase curso= new Clase(Clase.CUPO.CUPO_7);
+		Clase curso= new Clase(Clase.CUPO.CUPO_7, null);
 		Alumno alu= new Alumno();
 		curso.inscribir(alu);
 		curso.desinscribir(alu);
 		assertEquals("no quedo el curso vacio", 0,curso.cantidadDeAlumnos());
+		try {
+			curso.desinscribir(alu);
+		} catch (Exception e2) {
+			return;
+		}
+		fail("permitio eliminar de un curso vacio");
+		
 	}
 
 	@Test
 	public void testEliminarUnAlumno() throws Exception{
-		Clase curso= new Clase(Clase.CUPO.CUPO_7);
+		Clase curso= new Clase(Clase.CUPO.CUPO_7, null);
 		Alumno alu1= new Alumno();
 		Alumno alu2= new Alumno();
 		Alumno alu3= new Alumno();
@@ -86,7 +106,21 @@ public class TestClase {
 		assertFalse("no borró al que debia",curso.estaInscripto(alu3));
 		assertTrue("borró uno equivocado",curso.estaInscripto(alu2));
 		assertTrue("borró uno equivocado",curso.estaInscripto(alu1));
+		try {
+			curso.desinscribir(new Alumno());
+		} catch (Exception e2) {
+			return;
+		}
+		fail("permitio eliminar un alumno que no esta inscripto");
 	}
 	
-	
+	@Test
+	public void testTipoDeCursoValido(){
+		Clase curso1= new Clase(Clase.CUPO.CUPO_14,Clase.TIPO.TIPO_1);
+		assertEquals("no es el tipo correcto", Clase.TIPO.TIPO_1, curso1.verTipo());
+		Clase curso2= new Clase(Clase.CUPO.CUPO_14,Clase.TIPO.TIPO_2);
+		assertEquals("no es el tipo correcto", Clase.TIPO.TIPO_2, curso2.verTipo());
+		Clase curso3= new Clase(Clase.CUPO.CUPO_14,Clase.TIPO.TIPO_3);
+		assertEquals("no es el tipo correcto", Clase.TIPO.TIPO_3, curso3.verTipo());
+	}
 }
