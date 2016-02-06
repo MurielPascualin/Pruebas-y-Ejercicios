@@ -3,6 +3,7 @@ import java.util.List;
 
 
 public class Clase {
+	
 	enum CUPO{
 		CUPO_7(7), CUPO_14(14);
 		private int cupo;
@@ -14,24 +15,18 @@ public class Clase {
 		}
 	}
 	enum TIPO{
-		TIPO_1(1),TIPO_2(2),TIPO_3(3);
-		private int tipo;
-		public int tipo() {
-			return tipo;
+		FUERZA_MAX, RESISTENCIA, NEURO_MUSCULAR;
 		}
-		private TIPO(int i) {
-			tipo=i;
-		}
-	}
+	
 	private List<Alumno> listaAlumnos;
 	private CUPO cupoMax;
-	private TIPO tipoCurso;
+	private TIPO tipoClase;
 
-	public Clase(CUPO c, TIPO t) {
-		If 
+	
+	public Clase(CUPO c, TIPO t) throws Exception {
 		cupoMax= c;
+		tipoClase= t;
 		listaAlumnos= new ArrayList<Alumno>(cupoMax.cupo());
-		tipoCurso=t;
 	}
 
 	
@@ -54,9 +49,7 @@ public class Clase {
 		listaAlumnos.remove(alu);
 	}
 
-
-	public TIPO verTipo() {
-		return tipoCurso;
+	public String getTipoClase(){
+		return tipoClase.toString();
 	}
-
 }
