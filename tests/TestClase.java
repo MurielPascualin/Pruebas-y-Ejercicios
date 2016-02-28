@@ -23,7 +23,7 @@ public class TestClase {
 		
 		Clase curso = new Clase(Clase.CUPO.CUPO_14, null);
 		
-		fail("permitio crear clase sin datos");
+		fail("permitio crear clase sin tipo");
 	}
 	
 	@Test (expected = Exception.class)
@@ -31,9 +31,16 @@ public class TestClase {
 		
 		Clase curso = new Clase(null, Clase.TIPO.FUERZA_MAX);
 		
-		fail("permitio crear clase sin datos");
+		fail("permitio crear clase sin cupo");
 	}
 	
+	@Test (expected = Exception.class)
+	public void testClaseInvalida4() throws Exception {
+		
+		Clase curso = new Clase(Clase.CUPO.CUPO_14, Clase.TIPO.FUERZA_MAX, Clase.DIA.LUNES);
+		
+		fail("permitio crear clase sin horario");
+	}
 	
 	@Test
 	public void testCupoValido7(){
@@ -57,11 +64,11 @@ public class TestClase {
 	public void testAgregarAlumno() throws Exception{
 		Clase curso= new Clase(Clase.CUPO.CUPO_7, Clase.TIPO.FUERZA_MAX);
 		int cant= curso.cantidadDeAlumnos();
-		Alumno alu= new Alumno(null, null, null, null, cant, cant);
+		Alumno alu= new Alumno("juan", "tang", "calle", "tel", 1, 2);
 		curso.inscribir(alu);
 		assertEquals("no incremento la cantidad",cant+1,curso.cantidadDeAlumnos());
 		assertTrue("no se encontro al alumno en la lista de inscriptos",curso.estaInscripto(alu));
-		Alumno alu2= new Alumno(null, null, null, null, cant, cant);
+		Alumno alu2= new Alumno("juan", "tang", "calle", "tel", 1, 2);
 		assertFalse("aparece un alumno no inscripto", curso.estaInscripto(alu2));
 	}
 	
@@ -69,10 +76,10 @@ public class TestClase {
 	public void testNoPermitirAgregar8() throws Exception{
 		Clase curso= new Clase(Clase.CUPO.CUPO_7, Clase.TIPO.FUERZA_MAX);
 		for (int i = 0; i < 7; i++) {
-			curso.inscribir(new Alumno(null, null, null, null, i, i));
+			curso.inscribir(new Alumno("juan", "tang", "calle", "tel", 1, 2));
 		}
 		try {
-			curso.inscribir(new Alumno(null, null, null, null, 0, 0));
+			curso.inscribir(new Alumno("juan", "tang", "calle", "tel", 1, 2));
 		} catch (Exception e) {
 			return;
 		}
@@ -83,7 +90,7 @@ public class TestClase {
 	@Test
 	public void testEliminarUltimoAlumno() throws Exception{
 		Clase curso= new Clase(Clase.CUPO.CUPO_7, Clase.TIPO.FUERZA_MAX);
-		Alumno alu= new Alumno(null, null, null, null, 0, 0);
+		Alumno alu= new Alumno("juan", "tang", "calle", "tel", 1, 2);
 		curso.inscribir(alu);
 		curso.desinscribir(alu);
 		assertEquals("no quedo el curso vacio", 0,curso.cantidadDeAlumnos());
@@ -99,9 +106,9 @@ public class TestClase {
 	@Test
 	public void testEliminarUnAlumno() throws Exception{
 		Clase curso= new Clase(Clase.CUPO.CUPO_7, Clase.TIPO.FUERZA_MAX);
-		Alumno alu1= new Alumno(null, null, null, null, 0, 0);
-		Alumno alu2= new Alumno(null, null, null, null, 0, 0);
-		Alumno alu3= new Alumno(null, null, null, null, 0, 0);
+		Alumno alu1= new Alumno("juan", "tang", "calle", "tel", 1, 2);
+		Alumno alu2= new Alumno("juan", "tang", "calle", "tel", 1, 2);
+		Alumno alu3= new Alumno("juan", "tang", "calle", "tel", 1, 2);
 		curso.inscribir(alu1);
 		curso.inscribir(alu3);
 		curso.inscribir(alu2);

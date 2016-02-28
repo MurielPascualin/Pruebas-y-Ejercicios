@@ -13,6 +13,9 @@ public class Alumno {
 //	private Clase claseDeResistencia=null;
 //	private Clase claseDeNeuro=null;
 	
+	public Alumno(){
+		
+	}
 
 	public Alumno(String n, String a, String c, String t, int fNac, int fIngreso) throws Exception {
 		boolean hayError=true;
@@ -45,6 +48,7 @@ public class Alumno {
 	}
 
 	public void inscribir(Clase curso) throws Exception {
+		//aca verificar que no esete la clase en el mapa de clases
 		curso.inscribir(this);		
 	}
 

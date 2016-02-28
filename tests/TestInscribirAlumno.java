@@ -42,7 +42,7 @@ public class TestInscribirAlumno {
 		Alumno alu=new Alumno("leia", "ap", "", "", 1, 2);
 		clase1.inscribir(alu);
 		clase2.inscribir(alu);
-		assertFalse(clase1.estaInscripto(alu)&clase2.estaInscripto(alu)); //y aca me pregunto ¿es responsabilidad de la clase o del alumno? IMPORTA?
+		assertFalse(clase1.estaInscripto(alu) && clase2.estaInscripto(alu)); //y aca me pregunto ¿es responsabilidad de la clase o del alumno? IMPORTA?
 	}
 	
 	//FALTAN las validaciones de datos ¿se testea eso?

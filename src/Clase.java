@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
+
 
 public class Clase {
 	
@@ -17,6 +19,12 @@ public class Clase {
 	enum TIPO{
 		FUERZA_MAX, RESISTENCIA, NEURO_MUSCULAR;
 		}
+	enum DIA{
+		lunes,martes,miercoles,jueves,viernes,sabado;
+	}
+	enum HORA{
+		h06,h07,h08,h09,h10,h11,h12,h13,h14,h15,h16,h17,h18,h19,h20,h21,h22,h23
+	}
 	
 	private List<Alumno> listaAlumnos;
 	private CUPO cupoMax;
@@ -25,7 +33,8 @@ public class Clase {
 	
 	public Clase(CUPO c, TIPO t) throws Exception {
 		cupoMax= c;
-		tipoClase= t;
+		if (t!=null) tipoClase= t;
+		else throw new Exception("no puede ser nulo");
 		listaAlumnos= new ArrayList<Alumno>(cupoMax.cupo());
 	}
 
@@ -34,7 +43,7 @@ public class Clase {
 		return listaAlumnos.size();
 	}
 
-	public void inscribir(Alumno alu) throws Exception {
+	void inscribir(Alumno alu) throws Exception {
 		if (cantidadDeAlumnos()==cupoMax.cupo()) throw new Exception("la clase esta llena");
 		listaAlumnos.add(alu);
 	}
